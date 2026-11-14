@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-14T12:17:19+00:00",
- "sample": true,
+ "generated_at": "2026-11-14T12:42:20+00:00",
+ "sample": false,
  "student_income_eur": 1203.74,
  "assumptions": {
   "hourly_wage_eur": 13.9,
@@ -10,24 +10,24 @@
  },
  "layers": {
   "rents": {
-   "status": "sample",
-   "detail": "SYNTHETIC placeholder values - not real data"
+   "status": "missing",
+   "detail": "no rows yet in data/manual/rents.csv"
   },
   "students": {
-   "status": "sample",
-   "detail": "SYNTHETIC placeholder values - not real data"
+   "status": "missing",
+   "detail": "no rows yet in data/manual/students.csv"
   },
   "jobs": {
-   "status": "sample",
-   "detail": "SYNTHETIC placeholder values - not real data"
+   "status": "live",
+   "detail": "Bundesagentur für Arbeit job board"
   },
   "jobs_other": {
-   "status": "sample",
-   "detail": "SYNTHETIC placeholder values - not real data"
+   "status": "live",
+   "detail": "Arbeitnow, 2521 postings scanned"
   },
   "sectors": {
-   "status": "sample",
-   "detail": "SYNTHETIC placeholder values - not real data"
+   "status": "live",
+   "detail": "open postings by occupational field, Bundesagentur für Arbeit"
   }
  }
 }
