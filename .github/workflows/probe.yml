@@ -1,0 +1,31 @@
+name: Probe
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          B=https://rest.arbeitsagentur.de/jobboerse/jobsuche-service
+          H="X-API-Key: jobboerse-jobsuche"
+          q() { echo "=== $1"; curl -s -m 40 -H "$H" "$B/$1" | python3 -c "
+          import json,sys
+          try: d=json.load(sys.stdin)
+          except Exception as e: print('ERR',e); sys.exit()
+          print('KEYS',list(d.keys()),'max',d.get('maxErgebnisse'))
+          for s in (d.get('stellenangebote') or [])[:2]: print(json.dumps(s,ensure_ascii=False)[:900])
+          for name,f in (d.get('facetten') or {}).items() if isinstance(d.get('facetten'),dict) else []:
+              c=f.get('counts') or {}
+              print('FACET',name,len(c),json.dumps(dict(sorted(c.items(),key=lambda kv:-kv[1])[:int('$2' or 0) or 6]),ensure_ascii=False)[:6000])
+          "; }
+          q "pc/v4/app/jobs?was=Werkstudent&wo=Dortmund&umkreis=15&size=2&page=1&angebotsart=1"
+          q "pc/v4/app/jobs?was=Werkstudent&wo=Dortmund&umkreis=15&size=2&page=1"
+          q "pc/v4/app/jobs?was=Working%20Student&wo=Dortmund&umkreis=15&size=2&page=1"
+          q "pc/v4/app/jobs?was=Werkstudent&wo=Dortmund&umkreis=15&size=1&veroeffentlichtseit=7"
+          q "pc/v4/app/jobs?size=1&angebotsart=1" 200
+          q "pc/v4/app/jobs?size=1&angebotsart=1&veroeffentlichtseit=30"
+          q "pc/v4/app/jobs?size=1&angebotsart=1&veroeffentlichtseit=7"
+          q "pc/v4/app/jobs?size=1&angebotsart=1&berufsfeld=Informatik"
+          q "pc/v4/app/jobs?size=1&angebotsart=1&berufsfeld=Informatik&veroeffentlichtseit=7"
+          q "pc/v4/app/jobs?size=1&angebotsart=1&berufsfeld=Maschinenbau"
+          q "pc/v6/jobs?was=Werkstudent&wo=Dortmund&umkreis=15&size=2&page=1"
+          q "pc/v6/jobs?size=1&angebotsart=1&veroeffentlichtseit=7"
