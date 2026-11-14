@@ -7,7 +7,7 @@ compete for them, and which occupational fields are hiring or shrinking.
 
 ![Screenshot of the map (synthetic preview data)](docs/screenshot.png)
 
-**Live map:** `https://YOUR_USERNAME.github.io/germany-student-atlas/` (after you enable GitHub Pages, see below)
+**Live map:** `https://mohamad-nasher.github.io/germany-student-atlas/`
 
 > **Status of the data in this repository.** The files in `docs/data/` are
 > currently **synthetic placeholders** produced by `atlas sample` so the map can
@@ -36,7 +36,7 @@ labour shortage, growing, stable and shrinking.
 ## Quick start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/germany-student-atlas.git
+git clone https://github.com/Mohamad-Nasher/germany-student-atlas.git
 cd germany-student-atlas
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
@@ -61,7 +61,7 @@ Until you do, those measures show as "no data" rather than a guess.
 2. **Actions → Refresh data → Run workflow** for the first real data pull. It
    then runs every Monday, commits the new `docs/data/`, and builds up the
    sector history in `data/history/sectors.csv` that the trend labels need.
-3. Replace `YOUR_USERNAME` in this file and in `config/settings.yaml` (the
+3. Replace `Mohamad-Nasher` in this file and in `config/settings.yaml` (the
    User-Agent tells the data providers who is calling).
 
 ## How it works

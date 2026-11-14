@@ -1,5 +1,5 @@
 # Central settings. Every number that drives a result lives here.
-user_agent: "germany-student-atlas/0.1 (student research project; +https://github.com/YOUR_USERNAME/germany-student-atlas)"
+user_agent: "germany-student-atlas/0.1 (student research project; +https://github.com/Mohamad-Nasher/germany-student-atlas)"
 request_delay_seconds: 1.5      # pause between requests to the same host
 timeout_seconds: 30
 
