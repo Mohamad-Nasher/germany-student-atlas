@@ -9,12 +9,11 @@ compete for them, and which occupational fields are hiring or shrinking.
 
 **Live map:** `https://mohamad-nasher.github.io/germany-student-atlas/`
 
-> **Status of the data in this repository.** The files in `docs/data/` are
-> currently **synthetic placeholders** produced by `atlas sample` so the map can
-> be previewed; the map shows a banner saying so. The first run of the pipeline
-> replaces them. The live fetchers are covered by tests against recorded
-> example responses but had not yet been run against the real services when
-> this was written, so expect to fix small things on the first run.
+> **Status of the data.** Werkstudent postings and sector figures are live and
+> refresh every Monday. Rents and student numbers are not filled in yet (see
+> `data/manual/README.md`), so rent, competition and the opportunity score show
+> "no data" rather than a guess. The screenshot above uses synthetic preview
+> data to show the finished layout.
 
 ## What the map shows
 
@@ -89,18 +88,22 @@ failed, and the map's **Data** tab displays it.
 
 ## Methods and limits
 
-- **Language split.** The job board returns postings in pages, so the split is
-  measured on up to 300 postings per search term per city and scaled to the
-  reported total. Classification uses the title only, with a transparent word
+- **Which postings count.** The job board's free-text search also returns
+  ordinary internships, so only postings whose title names a student role
+  (Werkstudent, working student, studentische Aushilfe, …) are counted.
+- **Language split.** The job board returns postings in pages, so the title
+  filter and the split are measured on up to 300 postings per search term per
+  city and scaled to the reported total. Classification uses the title only, with a transparent word
   list (`language.py`); an English title does not guarantee an English workplace.
 - **Job counts are postings, not vacancies**, and employers are not required to
   list with the federal agency. English-language start-up roles are
   under-represented there, which is why a second board is added.
 - **Sector labels.** "Growing" and "shrinking" compare open postings with a
-  snapshot at least three weeks older (±10 %). Before two snapshots exist, the
-  share of postings published in the last 28 days stands in. Falling postings
-  mean weaker hiring; they are **not** a count of layoffs. "Labour shortage"
-  needs the federal agency's shortage score in `data/manual/sector_official.csv`.
+  snapshot at least three weeks older (±10 %). Until two such snapshots exist
+  the trend is shown as not yet available; the share of postings published in
+  the last 28 days is displayed for context only. Falling postings mean weaker
+  hiring; they are **not** a count of layoffs. "Labour shortage" needs the
+  federal agency's shortage score in `data/manual/sector_official.csv`.
 - **Rents.** No large German rental portal permits scraping, so the default is
   published figures; see `docs/DATA_SOURCES.md` for the reasoning and for how to
   add a listing source that allows automated access.

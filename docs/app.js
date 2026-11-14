@@ -10,6 +10,7 @@
     booming:    { label: "Hiring is growing", color: "#0ca30c", note: "open postings rising" },
     stable:     { label: "Stable", color: "#898781", note: "little change" },
     struggling: { label: "Hiring is shrinking", color: "#d03b3b", note: "open postings falling" },
+    pending:    { label: "Trend not yet available", color: "#c3c2b7", note: "" },
     unknown:    { label: "No data", color: "#c3c2b7", note: "" },
   };
 
@@ -73,6 +74,8 @@
   const $ = (id) => document.getElementById(id);
   const metricSel = $("metric"), stateSel = $("state"), maxRent = $("max-rent"), minJobs = $("min-jobs");
   for (const [key, m] of Object.entries(METRICS)) metricSel.add(new Option(m.label, key));
+  // Start on the first measure that actually has data.
+  metricSel.value = Object.keys(METRICS).find((k) => cities.some((c) => METRICS[k].get(c) !== null)) || "score";
   for (const f of geo.features.slice().sort((a, b) => a.properties.name.localeCompare(b.properties.name)))
     stateSel.add(new Option(f.properties.name, f.properties.id));
 
@@ -229,7 +232,7 @@
     }
     const pct = (v) => (num(v) === null ? "–" : (v > 0 ? "+" : "") + (v * 100).toFixed(0) + "%");
     let html = '<p class="count">Open postings on the federal job board by occupational field.</p>';
-    for (const key of ["shortage", "booming", "stable", "struggling", "unknown"]) {
+    for (const key of ["shortage", "booming", "stable", "struggling", "pending", "unknown"]) {
       const group = sectors.filter((s) => s.status === key).sort((a, b) => (b.stock || 0) - (a.stock || 0));
       if (!group.length) continue;
       const st = STATUS[key];
@@ -244,7 +247,7 @@
       html += "</tbody></table>";
     }
     html += '<p class="help">“Change” compares open postings with a snapshot at least three weeks older; until two '
-      + "snapshots exist, sectors are grouped by the share of postings that are new. “Shortage” is the federal "
+      + "snapshots exist, no trend is shown. “New, 28 d” is the share of open postings published in the last 28 days. “Shortage” is the federal "
       + "employment agency’s score (0–3; 2.0 or more counts as a shortage occupation) when supplied. "
       + "Falling postings signal weaker hiring, not confirmed layoffs.</p>";
     $("sectors").innerHTML = html;

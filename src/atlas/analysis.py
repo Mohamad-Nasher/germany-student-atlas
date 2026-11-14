@@ -39,6 +39,9 @@ def fit(df: pd.DataFrame, formula: str):
     data = data[(data[["rent_monthly", "students_total"]] > 0).all(axis=1)]
     if "jobs_per_1000" in formula:
         data = data[data["jobs_per_1000"] > 0]
+    if len(data) < 10:
+        raise ValueError(f"only {len(data)} cities have rent, student and job figures; "
+                         "fill in data/manual/rents.csv and students.csv first")
     return smf.ols(formula, data=data, missing="drop").fit(cov_type="HC3")
 
 

@@ -9,8 +9,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.5029,
-  "status": "booming",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "engineering_mech",
@@ -22,8 +22,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.4342,
-  "status": "booming",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "electrical",
@@ -35,8 +35,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.4416,
-  "status": "booming",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "energy",
@@ -48,8 +48,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.3692,
-  "status": "struggling",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "automotive",
@@ -61,8 +61,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.2634,
-  "status": "struggling",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "construction",
@@ -74,8 +74,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.2529,
-  "status": "struggling",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "health_care",
@@ -87,8 +87,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.2773,
-  "status": "struggling",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "elderly_care",
@@ -100,8 +100,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.2839,
-  "status": "struggling",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "education",
@@ -113,8 +113,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.4171,
-  "status": "stable",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "finance",
@@ -126,8 +126,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.4368,
-  "status": "booming",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "accounting",
@@ -139,8 +139,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.4098,
-  "status": "stable",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "marketing",
@@ -152,8 +152,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.4698,
-  "status": "booming",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "sales",
@@ -165,8 +165,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.2924,
-  "status": "struggling",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "logistics",
@@ -178,8 +178,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.395,
-  "status": "stable",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "hospitality",
@@ -191,8 +191,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.3234,
-  "status": "struggling",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "metal",
@@ -204,8 +204,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.4006,
-  "status": "stable",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "chemistry",
@@ -217,8 +217,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.414,
-  "status": "stable",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "office",
@@ -230,8 +230,8 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.4766,
-  "status": "booming",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  },
  {
   "sector": "media",
@@ -243,7 +243,7 @@
   "shortage_score": null,
   "employment_change_pct": null,
   "fresh_share": 0.5031,
-  "status": "booming",
-  "basis": "fresh_share"
+  "status": "pending",
+  "basis": "none"
  }
 ]

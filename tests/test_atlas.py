@@ -223,15 +223,16 @@ def test_sector_history_and_change(tmp_path):
     assert set(out["basis"]) == {"stock_change"}
 
 
-def test_sector_falls_back_to_fresh_share_without_history(tmp_path):
-    cfg = pd.DataFrame({"sector": ["a", "b", "c"], "label_en": list("ABC"),
-                        "berufsfeld": list("abc")})
-    snap = pd.DataFrame({"sector": ["a", "b", "c"], "stock": [100, 100, 100],
-                         "fresh": [60, 30, 10]})
+def test_sector_is_pending_without_history(tmp_path):
+    cfg = pd.DataFrame({"sector": ["a", "b"], "label_en": list("AB"), "berufsfeld": list("ab")})
+    snap = pd.DataFrame({"sector": ["a", "b"], "stock": [100, 100], "fresh": [60, 10]})
     hist = sectors.append_history(snap, tmp_path / "s.csv", date(2026, 11, 1))
-    out = sectors.build(snap, hist, cfg, None, date(2026, 11, 1))
-    assert list(out["status"]) == ["booming", "stable", "struggling"]
-    assert set(out["basis"]) == {"fresh_share"}
+    official = pd.DataFrame({"sector": ["b"], "shortage_score": [2.4],
+                             "employment_change_pct": [None]})
+    out = sectors.build(snap, hist, cfg, official, date(2026, 11, 1))
+    # No verdict from a single snapshot; an official shortage score still counts.
+    assert list(out["status"]) == ["pending", "shortage"]
+    assert list(out["fresh_share"]) == [0.6, 0.1]
 
 
 def _facets(stock, fresh):

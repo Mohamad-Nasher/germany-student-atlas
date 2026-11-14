@@ -2,8 +2,8 @@
 
 Three signals per sector:
   stock        open postings on the federal job board right now;
-  fresh_share  share of that stock published in the last 28 days (a turnover
-               proxy available from a single snapshot);
+  fresh_share  share of that stock published in the last 28 days (turnover;
+               shown for context, not used for the labels);
   stock_change change in the stock against the oldest snapshot at least three
                weeks old, kept in data/history/sectors.csv.
 Official context (shortage score, employment change) is merged from
@@ -74,15 +74,16 @@ def stock_change(hist: pd.DataFrame, today: date | None = None) -> pd.Series:
 
 
 def classify(df: pd.DataFrame) -> pd.DataFrame:
-    """Label each sector: shortage, booming, struggling or stable.
+    """Label each sector: shortage, booming, struggling, stable or pending.
 
-    A sector's momentum comes from stock_change when history exists, and
-    otherwise from where its fresh_share sits among all sectors (top or bottom
-    third). `basis` records which one was used, so the map can say so.
+    Booming / struggling need a trend, i.e. stock_change from two snapshots at
+    least MIN_GAP_DAYS apart. Until then the sector is "pending": the share of
+    new postings alone cannot tell growth from fast turnover, and a low share
+    is typical of hard-to-fill shortage occupations, so it is shown but not
+    turned into a verdict.
     """
     df = df.copy()
     df["fresh_share"] = (df["fresh"] / df["stock"]).where(df["stock"] > 0)
-    hi, lo = df["fresh_share"].quantile([2 / 3, 1 / 3])
     labels, basis = [], []
     for row in df.itertuples():
         change = getattr(row, "stock_change", None)
@@ -91,14 +92,11 @@ def classify(df: pd.DataFrame) -> pd.DataFrame:
             momentum = ("booming" if change > MOVE_THRESHOLD
                         else "struggling" if change < -MOVE_THRESHOLD else "stable")
             used = "stock_change"
-        elif pd.notna(row.fresh_share):
-            momentum = ("booming" if row.fresh_share >= hi
-                        else "struggling" if row.fresh_share <= lo else "stable")
-            used = "fresh_share"
         else:
-            momentum, used = "unknown", "none"
+            momentum, used = "pending", "none"
         if pd.notna(score) and score >= SHORTAGE_THRESHOLD and momentum != "struggling":
             labels.append("shortage")
+            used = "shortage_score" if used == "none" else used
         else:
             labels.append(momentum)
         basis.append(used)
