@@ -1,0 +1,10 @@
+{
+ "stellenangebote": [
+  {"beruf": "Helfer/in - Büro, Verwaltung", "titel": "Werkstudent (m/w/d) im Bereich Controlling", "refnr": "10001-1000000001-S", "arbeitsort": {"plz": "44135", "ort": "Dortmund", "region": "Nordrhein-Westfalen", "land": "Deutschland"}, "arbeitgeber": "Muster GmbH", "aktuelleVeroeffentlichungsdatum": "2026-11-02", "eintrittsdatum": "2026-12-01"},
+  {"beruf": "Softwareentwickler/in", "titel": "Working Student Data Engineering (f/m/x)", "refnr": "10001-1000000002-S", "arbeitsort": {"plz": "44137", "ort": "Dortmund"}, "arbeitgeber": "Example AG", "aktuelleVeroeffentlichungsdatum": "2026-11-05"},
+  {"beruf": "Verkäufer/in", "titel": "Werkstudentin für den Verkauf", "refnr": "10001-1000000003-S", "arbeitsort": {"ort": "Dortmund"}, "arbeitgeber": "Laden KG", "aktuelleVeroeffentlichungsdatum": "2026-10-20"}
+ ],
+ "maxErgebnisse": 3,
+ "page": 1,
+ "size": 100
+}

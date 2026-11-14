@@ -1,0 +1,25 @@
+# Central settings. Every number that drives a result lives here.
+user_agent: "germany-student-atlas/0.1 (student research project; +https://github.com/YOUR_USERNAME/germany-student-atlas)"
+request_delay_seconds: 1.5      # pause between requests to the same host
+timeout_seconds: 30
+
+jobs:
+  search_terms: ["Werkstudent", "Working Student"]
+  radius_km: 15                 # search radius around each city
+  max_pages_per_query: 3        # x100 postings; used to estimate the language split
+  fresh_days: 30                # "new postings" window for sector momentum
+
+student_income:
+  # Statutory minimum wage in Germany, EUR/hour (13.90 from 1 Jan 2026).
+  hourly_wage_eur: 13.90
+  hours_per_week: 20            # Werkstudent limit during the lecture period
+  weeks_per_month: 4.33
+
+rent:
+  # Used to convert EUR/m2 into a monthly figure comparable to a room price.
+  reference_room_m2: 20
+
+# Optional listing sources for asking rents. EMPTY BY DEFAULT.
+# Add a site only if its robots.txt AND terms of use allow automated access.
+# See docs/DATA_SOURCES.md for the format and the legal notes.
+listing_sources: []

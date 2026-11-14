@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Germany Student Atlas</title>
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="sample-banner" hidden>
+  <strong>Preview with synthetic data.</strong> Every number on this page is a random placeholder,
+  not a real figure. Run the pipeline (see the README) to replace it.
+</div>
+<header>
+  <h1>Germany Student Atlas</h1>
+  <p>Where can a student afford to live, find a Werkstudent job, and how crowded is the field?</p>
+</header>
+<main>
+  <aside id="controls" aria-label="Filters">
+    <label for="metric">Colour the map by</label>
+    <select id="metric"></select>
+    <p id="metric-help" class="help"></p>
+
+    <fieldset>
+      <legend>Job posting language</legend>
+      <label class="inline"><input type="radio" name="lang" value="all" checked> All</label>
+      <label class="inline"><input type="radio" name="lang" value="en"> English</label>
+      <label class="inline"><input type="radio" name="lang" value="de"> German</label>
+    </fieldset>
+
+    <label for="state">Federal state</label>
+    <select id="state"><option value="">All states</option></select>
+
+    <label for="max-rent">Rent at most <output id="max-rent-out"></output></label>
+    <input type="range" id="max-rent" step="10">
+
+    <label for="min-jobs">At least <output id="min-jobs-out"></output> job postings</label>
+    <input type="range" id="min-jobs" min="0" step="5" value="0">
+
+    <label class="inline"><input type="checkbox" id="heat"> Heat map of international students</label>
+
+    <button id="reset" type="button">Reset filters</button>
+
+    <div id="legend" aria-label="Legend"></div>
+  </aside>
+
+  <div id="map" role="application" aria-label="Map of Germany"></div>
+
+  <section id="panel">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="ranking">City ranking</button>
+      <button role="tab" aria-selected="false" data-tab="sectors">Sectors</button>
+      <button role="tab" aria-selected="false" data-tab="about">Data</button>
+    </div>
+    <div id="ranking" class="tab"></div>
+    <div id="sectors" class="tab" hidden></div>
+    <div id="about" class="tab" hidden></div>
+  </section>
+</main>
+<script src="vendor/leaflet.js"></script>
+<script src="vendor/leaflet-heat.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+ "generated_at": "2026-11-14T12:17:19+00:00",
+ "sample": true,
+ "student_income_eur": 1203.74,
+ "assumptions": {
+  "hourly_wage_eur": 13.9,
+  "hours_per_week": 20,
+  "weeks_per_month": 4.33,
+  "reference_room_m2": 20
+ },
+ "layers": {
+  "rents": {
+   "status": "sample",
+   "detail": "SYNTHETIC placeholder values - not real data"
+  },
+  "students": {
+   "status": "sample",
+   "detail": "SYNTHETIC placeholder values - not real data"
+  },
+  "jobs": {
+   "status": "sample",
+   "detail": "SYNTHETIC placeholder values - not real data"
+  },
+  "jobs_other": {
+   "status": "sample",
+   "detail": "SYNTHETIC placeholder values - not real data"
+  },
+  "sectors": {
+   "status": "sample",
+   "detail": "SYNTHETIC placeholder values - not real data"
+  }
+ }
+}

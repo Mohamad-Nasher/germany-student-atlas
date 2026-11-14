@@ -1,0 +1,9 @@
+{
+ "data": [
+  {"slug": "a", "company_name": "Acme", "title": "Working Student Marketing (m/f/d)", "description": "<p>We are looking for a student to join our team and support the marketing operations.</p>", "remote": false, "tags": ["marketing"], "job_types": ["working student"], "location": "Berlin", "created_at": 1794000000},
+  {"slug": "b", "company_name": "Beta", "title": "Werkstudent Buchhaltung (m/w/d)", "description": "<p>Wir suchen ab sofort Unterstützung für unsere Buchhaltung.</p>", "remote": false, "tags": [], "job_types": [], "location": "Frankfurt, Hesse", "created_at": 1794000001},
+  {"slug": "c", "company_name": "Gamma", "title": "Senior Backend Engineer", "description": "<p>Full time role.</p>", "remote": true, "tags": [], "job_types": [], "location": "Berlin", "created_at": 1794000002}
+ ],
+ "links": {"first": "x", "last": null, "prev": null, "next": null},
+ "meta": {"current_page": 1}
+}
