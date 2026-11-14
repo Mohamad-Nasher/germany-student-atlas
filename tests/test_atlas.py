@@ -96,6 +96,23 @@ def test_werkstudent_jobs_sends_expected_query():
     assert params["umkreis"] == 15
 
 
+def test_search_falls_back_to_next_endpoint():
+    jobs_ba._working.clear()
+    session, http = polite({
+        "pc/v4/app/jobs": FakeResponse(status=403),
+        "pc/v6/jobs": FakeResponse({"maxErgebnisse": "7", "stellenangebote": [
+            {"referenznummer": "r1", "stellenangebotsTitel": "Working Student Finance",
+             "arbeitsorte": [{"ort": "Dortmund"}]}]}),
+    })
+    assert jobs_ba.count(session, was="x") == 7
+    assert jobs_ba._working == [jobs_ba.ENDPOINTS[1]]
+    rows = jobs_ba.parse_postings(jobs_ba.search(session, was="x"))
+    assert rows[0]["id"] == "r1" and rows[0]["city"] == "Dortmund"
+    assert rows[0]["title"] == "Working Student Finance"
+    assert len(http.calls) == 3  # the dead endpoint is not retried once one works
+    jobs_ba._working.clear()
+
+
 # --- arbeitnow -----------------------------------------------------------------------------
 
 def test_arbeitnow_counts_only_student_roles_per_city():

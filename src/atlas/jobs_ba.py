@@ -7,17 +7,32 @@ https://github.com/bundesAPI/jobsuche-api. It needs only a public client id.
 
 from __future__ import annotations
 
+import requests
+
 from .http import PoliteSession
 from .language import classify
 
-URL = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/jobs"
+BASE = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service"
+# The agency has retired search paths before (pc/v4/jobs now answers 403), so
+# the known ones are tried in order and the first that answers is kept.
+ENDPOINTS = [BASE + "/pc/v4/app/jobs", BASE + "/pc/v6/jobs", BASE + "/pc/v4/jobs"]
 HEADERS = {"X-API-Key": "jobboerse-jobsuche"}
 PAGE_SIZE = 100
+_working: list[str] = []
 
 
 def search(session: PoliteSession, **params) -> dict:
     params.setdefault("angebotsart", 1)  # 1 = regular employment
-    return session.get(URL, params=params, headers=HEADERS).json()
+    last_error: Exception | None = None
+    for url in _working or ENDPOINTS:
+        try:
+            payload = session.get(url, params=params, headers=HEADERS).json()
+        except requests.RequestException as exc:
+            last_error = exc
+            continue
+        _working[:] = [url]
+        return payload
+    raise last_error  # type: ignore[misc]
 
 
 def count(session: PoliteSession, **params) -> int:
@@ -28,10 +43,12 @@ def count(session: PoliteSession, **params) -> int:
 def parse_postings(payload: dict) -> list[dict]:
     rows = []
     for item in payload.get("stellenangebote") or []:
-        place = item.get("arbeitsort") or {}
+        # Field names differ slightly between endpoint versions.
+        place = item.get("arbeitsort") or (item.get("arbeitsorte") or [{}])[0] or {}
         rows.append({
-            "id": item.get("refnr"),
-            "title": item.get("titel") or item.get("beruf") or "",
+            "id": item.get("refnr") or item.get("referenznummer") or item.get("hashId"),
+            "title": (item.get("titel") or item.get("stellenangebotsTitel")
+                      or item.get("beruf") or ""),
             "employer": item.get("arbeitgeber"),
             "city": place.get("ort"),
             "published": item.get("aktuelleVeroeffentlichungsdatum"),
