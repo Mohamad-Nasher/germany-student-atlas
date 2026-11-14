@@ -235,7 +235,7 @@
       const st = STATUS[key];
       html += '<h2 class="group"><span class="dot" style="background:' + st.color + '"></span>' + st.label
         + ' <span class="chip">' + group.length + "</span></h2>"
-        + '<table><thead><tr><th class="text">Field</th><th>Open</th><th>New, 30 d</th><th>Change</th><th>Shortage</th></tr></thead><tbody>';
+        + '<table><thead><tr><th class="text">Field</th><th>Open</th><th>New, 28 d</th><th>Change</th><th>Shortage</th></tr></thead><tbody>';
       for (const s of group) {
         html += '<tr><td class="text">' + s.label_en + "</td><td>" + (num(s.stock) === null ? "–" : fmtInt(s.stock))
           + "</td><td>" + pct(s.fresh_share).replace("+", "") + "</td><td>" + pct(s.stock_change)

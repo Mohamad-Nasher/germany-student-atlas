@@ -2,7 +2,7 @@
 
 Three signals per sector:
   stock        open postings on the federal job board right now;
-  fresh_share  share of that stock published in the last N days (a turnover
+  fresh_share  share of that stock published in the last 28 days (a turnover
                proxy available from a single snapshot);
   stock_change change in the stock against the oldest snapshot at least three
                weeks old, kept in data/history/sectors.csv.
@@ -26,11 +26,24 @@ MOVE_THRESHOLD = 0.10      # +/-10 % change in open postings
 
 
 def snapshot(session: PoliteSession, sectors: pd.DataFrame, fresh_days: int) -> pd.DataFrame:
-    rows = []
+    """Open postings per sector, in two requests.
+
+    The job board returns a count for every occupational field alongside any
+    search, so one request gives the whole stock and a second (restricted to
+    postings published in the last `fresh_days`) gives the new ones. A sector
+    is the sum of the fields listed for it in config/sectors.csv.
+    """
+    stock = jobs_ba.facet(session, "berufsfeld", angebotsart=1)
+    fresh = jobs_ba.facet(session, "berufsfeld", angebotsart=1, veroeffentlichtseit=fresh_days)
+    rows, unknown = [], []
     for row in sectors.itertuples():
-        stock = jobs_ba.count(session, berufsfeld=row.berufsfeld)
-        fresh = jobs_ba.count(session, berufsfeld=row.berufsfeld, veroeffentlichtseit=fresh_days)
-        rows.append({"sector": row.sector, "stock": stock, "fresh": fresh})
+        fields = [f.strip() for f in row.berufsfeld.split("|")]
+        unknown += [f for f in fields if f not in stock]
+        rows.append({"sector": row.sector,
+                     "stock": sum(stock.get(f, 0) for f in fields),
+                     "fresh": sum(fresh.get(f, 0) for f in fields)})
+    if unknown:
+        raise ValueError(f"occupational fields not known to the job board: {unknown}")
     return pd.DataFrame(rows)
 
 

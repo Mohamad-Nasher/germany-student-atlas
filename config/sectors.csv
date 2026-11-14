@@ -1,19 +1,20 @@
-sector,berufsfeld,label_en
-it,Informatik,IT & software
-engineering_mech,Maschinenbau,Mechanical engineering
-electrical,Elektrotechnik,Electrical engineering
-automotive,Fahrzeugtechnik,Automotive
-construction,Hochbau,Construction
-health_care,Gesundheits- und Krankenpflege,Nursing & health care
-elderly_care,Altenpflege,Elderly care
-education,Erziehung,Education & childcare
-finance,Bank- und Versicherungswesen,Banking & insurance
-accounting,Rechnungswesen,Accounting & controlling
-marketing,Werbung und Marketing,Marketing
-sales,Verkauf,Retail & sales
-logistics,Lagerwirtschaft,Logistics & warehousing
-hospitality,Gastronomie,Hospitality
-metal,Metallbearbeitung,Metal working
-chemistry,Chemie,Chemicals & pharma
-energy,Energietechnik,Energy technology
-media,Redaktion und Journalismus,Media & journalism
+sector,label_en,berufsfeld
+it,IT & software,"Informatik|Softwareentwicklung und Programmierung|IT-Netzwerktechnik, -Administration, -Organisation|IT-Systemanalyse, -Anwendungsberatung und -Vertrieb"
+engineering_mech,Mechanical engineering & automation,"Maschinenbau- und Betriebstechnik|Mechatronik und Automatisierungstechnik"
+electrical,Electrical engineering,"Elektrotechnik"
+energy,Energy technology,"Energietechnik"
+automotive,"Vehicles, aerospace & shipbuilding","Fahrzeug-, Luft-, Raumfahrt- und Schiffbautechnik"
+construction,Construction & architecture,"Hochbau|Tiefbau|Bauplanung und -überwachung, Architektur|Aus- und Trockenbau, Isolierung, Zimmerei, Glaserei"
+health_care,Nursing & medicine,"Krankenpflege, Rettungsdienst und Geburtshilfe|Human- und Zahnmedizin|Arzt- und Praxishilfe"
+elderly_care,Elderly care,"Altenpflege"
+education,Education & social work,"Erziehung, Sozialarbeit, Heilerziehungspflege"
+finance,Insurance & financial services,"Versicherungs- und Finanzdienstleistungen"
+accounting,"Accounting, controlling & tax","Rechnungswesen, Controlling und Revision|Steuerberatung"
+marketing,Marketing & advertising,"Werbung und Marketing"
+sales,"Retail, purchasing & sales","Verkauf (ohne Produktspezialisierung)|Verkauf Bekleidung, Elektro, KFZ, Hartwaren|Verkauf von Lebensmitteln|Einkauf und Vertrieb"
+logistics,Logistics & transport,"Lagerwirtschaft, Post und Zustellung, Güterumschlag|Kaufleute - Verkehr und Logistik|Fahrzeugführung im Straßenverkehr"
+hospitality,Hospitality & catering,"Gastronomie|Hotellerie|Speisenzubereitung"
+metal,Metal working,"Metallbearbeitung|Metallbau und Schweißtechnik"
+chemistry,"Chemicals, pharma & plastics","Chemie|Pharmazie|Kunststoff- und Kautschukherstellung"
+office,"Office, HR & management","Büro und Sekretariat|Unternehmensorganisation und -strategie|Personalwesen und -dienstleistung"
+media,Media & journalism,"Redaktion und Journalismus|Technische Mediengestaltung"

@@ -41,7 +41,7 @@ cd germany-student-atlas
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-pytest -q            # 35 tests, no network needed
+pytest -q            # 38 tests, no network needed
 atlas build          # fetch jobs and sectors, merge data/manual, write docs/data
 atlas analyze        # regressions -> analysis/results.md
 make serve           # open http://localhost:8000
@@ -98,7 +98,7 @@ failed, and the map's **Data** tab displays it.
   under-represented there, which is why a second board is added.
 - **Sector labels.** "Growing" and "shrinking" compare open postings with a
   snapshot at least three weeks older (±10 %). Before two snapshots exist, the
-  share of postings published in the last 30 days stands in. Falling postings
+  share of postings published in the last 28 days stands in. Falling postings
   mean weaker hiring; they are **not** a count of layoffs. "Labour shortage"
   needs the federal agency's shortage score in `data/manual/sector_official.csv`.
 - **Rents.** No large German rental portal permits scraping, so the default is

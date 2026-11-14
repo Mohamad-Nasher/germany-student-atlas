@@ -7,7 +7,7 @@ jobs:
   search_terms: ["Werkstudent", "Working Student"]
   radius_km: 15                 # search radius around each city
   max_pages_per_query: 3        # x100 postings; used to estimate the language split
-  fresh_days: 30                # "new postings" window for sector momentum
+  fresh_days: 28                # "new postings" window; the job board accepts 1, 7, 14 or 28
 
 student_income:
   # Statutory minimum wage in Germany, EUR/hour (13.90 from 1 Jan 2026).

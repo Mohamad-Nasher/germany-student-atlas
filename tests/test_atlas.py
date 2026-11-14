@@ -69,48 +69,39 @@ def test_classify(title, expected):
 
 def test_parse_postings():
     rows = jobs_ba.parse_postings(fixture("ba_search.json"))
-    assert [r["city"] for r in rows] == ["Dortmund"] * 3
-    assert rows[1]["title"].startswith("Working Student")
+    assert [r["city"] for r in rows] == ["Dortmund"] * 4
+    assert rows[1]["title"].startswith("Working Student") and rows[0]["employer"] == "Muster GmbH"
 
 
-def test_summarise_scales_sample_to_total():
+def test_summarise_keeps_only_student_titles_and_scales():
     rows = jobs_ba.parse_postings(fixture("ba_search.json"))
-    # 3 unique postings sampled out of a reported 30 -> split scaled x10.
-    out = jobs_ba.summarise(rows, reported_total=30, downloaded=3)
+    # 4 postings sampled out of a reported 40 (x10); the plain internship is dropped.
+    out = jobs_ba.summarise(rows, reported_total=40, downloaded=4)
     assert out == {"jobs_total": 30, "jobs_en": 10, "jobs_de": 20,
-                   "jobs_unclassified": 0, "jobs_sampled": 3}
+                   "jobs_unclassified": 0, "jobs_sampled": 4}
 
 
 def test_summarise_removes_cross_term_duplicates():
     rows = jobs_ba.parse_postings(fixture("ba_search.json"))
-    # Both search terms returned the same 3 postings: 6 downloaded, 3 unique.
-    assert jobs_ba.summarise(rows, reported_total=6, downloaded=6)["jobs_total"] == 3
+    # Both search terms returned the same 4 postings: 8 downloaded, 4 unique.
+    assert jobs_ba.summarise(rows, reported_total=8, downloaded=8)["jobs_total"] == 3
 
 
 def test_werkstudent_jobs_sends_expected_query():
     session, http = polite({"arbeitsagentur": FakeResponse(fixture("ba_search.json"))})
     out = jobs_ba.werkstudent_jobs(session, "Dortmund", load_settings())
     assert out["jobs_total"] == 3 and out["jobs_en"] == 1 and out["jobs_de"] == 2
-    _, params = http.calls[0]
+    url, params = http.calls[0]
+    assert url.endswith("/pc/v6/jobs")
     assert params["wo"] == "Dortmund" and params["was"] == "Werkstudent"
-    assert params["umkreis"] == 15
+    assert params["umkreis"] == 15 and "angebotsart" not in params
 
 
-def test_search_falls_back_to_next_endpoint():
-    jobs_ba._working.clear()
-    session, http = polite({
-        "pc/v4/app/jobs": FakeResponse(status=403),
-        "pc/v6/jobs": FakeResponse({"maxErgebnisse": "7", "stellenangebote": [
-            {"referenznummer": "r1", "stellenangebotsTitel": "Working Student Finance",
-             "arbeitsorte": [{"ort": "Dortmund"}]}]}),
-    })
-    assert jobs_ba.count(session, was="x") == 7
-    assert jobs_ba._working == [jobs_ba.ENDPOINTS[1]]
-    rows = jobs_ba.parse_postings(jobs_ba.search(session, was="x"))
-    assert rows[0]["id"] == "r1" and rows[0]["city"] == "Dortmund"
-    assert rows[0]["title"] == "Working Student Finance"
-    assert len(http.calls) == 3  # the dead endpoint is not retried once one works
-    jobs_ba._working.clear()
+def test_facet():
+    session, _ = polite({"arbeitsagentur": FakeResponse(fixture("ba_search.json"))})
+    assert jobs_ba.facet(session, "berufsfeld") == {"Informatik": 5, "Werbung und Marketing": 7}
+    with pytest.raises(ValueError):
+        jobs_ba.facet(session, "nonexistent")
 
 
 # --- arbeitnow -----------------------------------------------------------------------------
@@ -243,13 +234,34 @@ def test_sector_falls_back_to_fresh_share_without_history(tmp_path):
     assert set(out["basis"]) == {"fresh_share"}
 
 
-def test_sector_snapshot_queries(tmp_path):
+def _facets(stock, fresh):
     def handler(params):
-        return FakeResponse({"maxErgebnisse": 50 if "veroeffentlichtseit" in params else 200})
-    session, http = polite({"arbeitsagentur": handler})
-    snap = sectors.snapshot(session, load_sectors().head(2), fresh_days=30)
-    assert list(snap["stock"]) == [200, 200] and list(snap["fresh"]) == [50, 50]
-    assert http.calls[0][1]["berufsfeld"] == "Informatik"
+        counts = fresh if "veroeffentlichtseit" in params else stock
+        return FakeResponse({"maxErgebnisse": 1, "facetten": {"berufsfeld": {"counts": counts}}})
+    return handler
+
+
+def test_sector_snapshot_sums_fields_from_two_requests():
+    cfg = pd.DataFrame({"sector": ["it", "ads"], "label_en": ["IT", "Ads"],
+                        "berufsfeld": ["Informatik|Softwareentwicklung", "Werbung"]})
+    stock = {"Informatik": 100, "Softwareentwicklung": 50, "Werbung": 30, "Other": 9}
+    fresh = {"Informatik": 40, "Softwareentwicklung": 10, "Werbung": 3}
+    session, http = polite({"arbeitsagentur": _facets(stock, fresh)})
+    snap = sectors.snapshot(session, cfg, fresh_days=28)
+    assert list(snap["stock"]) == [150, 30] and list(snap["fresh"]) == [50, 3]
+    assert len(http.calls) == 2 and http.calls[1][1]["veroeffentlichtseit"] == 28
+
+
+def test_sector_snapshot_rejects_unknown_field_names():
+    cfg = pd.DataFrame({"sector": ["x"], "label_en": ["X"], "berufsfeld": ["Typo"]})
+    session, _ = polite({"arbeitsagentur": _facets({"Informatik": 1}, {"Informatik": 1})})
+    with pytest.raises(ValueError, match="Typo"):
+        sectors.snapshot(session, cfg, fresh_days=28)
+
+
+def test_configured_sector_fields_are_unique():
+    fields = [f for cell in load_sectors()["berufsfeld"] for f in cell.split("|")]
+    assert len(fields) == len(set(fields)) and load_sectors()["sector"].is_unique
 
 
 # --- manual inputs and end-to-end build ----------------------------------------------------
@@ -275,8 +287,11 @@ def test_build_end_to_end(tmp_path):
         "city,students_total,students_international,semester,source\n"
         "Dortmund,50000,6000,WS 2025/26,Test\nBerlin,200000,45000,WS 2025/26,Test\n",
         encoding="utf-8")
+    payload = fixture("ba_search.json")
+    payload["facetten"]["berufsfeld"]["counts"] = {
+        f: 10 for cell in load_sectors()["berufsfeld"] for f in cell.split("|")}
     session, _ = polite({
-        "arbeitsagentur": FakeResponse(fixture("ba_search.json")),
+        "arbeitsagentur": FakeResponse(payload),
         "arbeitnow": FakeResponse(fixture("arbeitnow.json")),
     })
     meta = build(load_settings(), session=session, manual_dir=manual_dir, out_dir=out_dir,

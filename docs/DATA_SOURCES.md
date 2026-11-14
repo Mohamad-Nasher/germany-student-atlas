@@ -6,7 +6,7 @@
 |---|---|---|
 | Werkstudent postings, by city and language | Bundesagentur für Arbeit job board | public search endpoint, public client id ([community docs](https://github.com/bundesAPI/jobsuche-api)) |
 | Student jobs on other boards | [Arbeitnow](https://www.arbeitnow.com/api/job-board-api) | free public JSON API |
-| Sector hiring (open postings, share new in 30 days) | Bundesagentur für Arbeit job board | as above |
+| Sector hiring (open postings, share new in 28 days) | Bundesagentur für Arbeit job board | as above |
 
 ## What you supply
 

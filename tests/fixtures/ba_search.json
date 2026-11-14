@@ -1,10 +1,73 @@
 {
- "stellenangebote": [
-  {"beruf": "Helfer/in - Büro, Verwaltung", "titel": "Werkstudent (m/w/d) im Bereich Controlling", "refnr": "10001-1000000001-S", "arbeitsort": {"plz": "44135", "ort": "Dortmund", "region": "Nordrhein-Westfalen", "land": "Deutschland"}, "arbeitgeber": "Muster GmbH", "aktuelleVeroeffentlichungsdatum": "2026-11-02", "eintrittsdatum": "2026-12-01"},
-  {"beruf": "Softwareentwickler/in", "titel": "Working Student Data Engineering (f/m/x)", "refnr": "10001-1000000002-S", "arbeitsort": {"plz": "44137", "ort": "Dortmund"}, "arbeitgeber": "Example AG", "aktuelleVeroeffentlichungsdatum": "2026-11-05"},
-  {"beruf": "Verkäufer/in", "titel": "Werkstudentin für den Verkauf", "refnr": "10001-1000000003-S", "arbeitsort": {"ort": "Dortmund"}, "arbeitgeber": "Laden KG", "aktuelleVeroeffentlichungsdatum": "2026-10-20"}
+ "ergebnisliste": [
+  {
+   "stellenangebotsart": "PRAKTIKUM_TRAINEE",
+   "stellenangebotsTitel": "Werkstudent (m/w/d) im Bereich Controlling",
+   "stellenlokationen": [
+    {
+     "adresse": {
+      "plz": "44139",
+      "ort": "Dortmund",
+      "region": "NORDRHEIN_WESTFALEN"
+     }
+    }
+   ],
+   "datumErsteVeroeffentlichung": "2026-10-30",
+   "hauptberuf": "Controller/in",
+   "firma": "Muster GmbH",
+   "referenznummer": "10001-1000000001-S"
+  },
+  {
+   "stellenangebotsart": "ARBEIT",
+   "stellenangebotsTitel": "Working Student Data Engineering (f/m/x)",
+   "stellenlokationen": [
+    {
+     "adresse": {
+      "ort": "Dortmund"
+     }
+    }
+   ],
+   "datumErsteVeroeffentlichung": "2026-11-05",
+   "firma": "Example AG",
+   "referenznummer": "10001-1000000002-S"
+  },
+  {
+   "stellenangebotsart": "ARBEIT",
+   "stellenangebotsTitel": "Werkstudentin für den Verkauf",
+   "stellenlokationen": [
+    {
+     "adresse": {
+      "ort": "Dortmund"
+     }
+    }
+   ],
+   "firma": "Laden KG",
+   "referenznummer": "10001-1000000003-S"
+  },
+  {
+   "stellenangebotsart": "PRAKTIKUM_TRAINEE",
+   "stellenangebotsTitel": "Praktikum Marketing (m/w/d)",
+   "stellenlokationen": [
+    {
+     "adresse": {
+      "ort": "Dortmund"
+     }
+    }
+   ],
+   "firma": "Agentur",
+   "referenznummer": "10001-1000000004-S"
+  }
  ],
- "maxErgebnisse": 3,
+ "maxErgebnisse": 4,
  "page": 1,
- "size": 100
+ "size": 100,
+ "facetten": {
+  "berufsfeld": {
+   "counts": {
+    "Informatik": 5,
+    "Werbung und Marketing": 7
+   },
+   "maxCount": 71
+  }
+ }
 }
