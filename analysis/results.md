@@ -1,6 +1,6 @@
 # Regression results
 
-Generated from `docs/data/cities.json` (2026-11-14T13:09:16+00:00).
+Generated from `docs/data/cities.json` (2026-11-16T12:55:01+00:00).
 
 ### Rent
 
